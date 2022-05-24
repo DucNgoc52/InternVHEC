@@ -11,8 +11,8 @@
         public DateTime DateOn { get; set; }
     }
 
-    public class CreateStaffRequest
+    public class StaffListModel
     {
-
+        public List<StaffModel> Items { get; set; }
     }
 }
