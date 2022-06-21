@@ -5,10 +5,12 @@
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
-        public int TotalItem { get; set; }
+        public int TotalCount { get; set; }
+
         public bool HasNext
         {
-            get { return PageSize * (CurrentPage - 1) < TotalPages; }
+
+            get { return PageSize * (CurrentPage) < TotalCount; }
         }
 
         public bool HasPrevious

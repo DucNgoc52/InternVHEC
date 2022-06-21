@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic;
+using IMS_LEARN.Models.Paging;
 
 namespace IMS_LEARN.Controllers
 {
@@ -22,15 +23,19 @@ namespace IMS_LEARN.Controllers
             _staffService = staffService;
         }
 
+        /// <summary>
+        /// Get List Staff by Paging or All
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetList")]
         public IActionResult GetList(ResquestParameters parameters)
         {
-            var result = new List<StaffModel>();
             try
             {
                 var tempStaffs = _staffService.GetList();
-                
+
                 // Search
                 if (!string.IsNullOrEmpty(parameters.Filter))
                 {
@@ -39,7 +44,6 @@ namespace IMS_LEARN.Controllers
                     Func<StaffModel, bool> filterExpression = tempFilterExpression.Result;
 
                     tempStaffs = tempStaffs.Where(filterExpression).AsQueryable();
-                    //result = tempData.ToList();
                 }
 
                 // Order by
@@ -52,13 +56,21 @@ namespace IMS_LEARN.Controllers
                     tempStaffs = tempStaffs.OrderBy(x => x.StaffCode);
                 }
 
-                //// Check dropdown
-                //if (parameters.IsDropdown)
-                //{
-                //    return
-                //}
+                // Check dropdown
+                if (parameters.IsDropdown)
+                {
+                    var tempStaffsDropdown = PagedList<StaffModel>.ToPagedList(tempStaffs.ToList(), 0, tempStaffs.Count());
+                    return Ok(new StaffListModel { Items = tempStaffsDropdown });
+                }
 
-                return Ok(tempStaffs);
+                int totolCount = tempStaffs.Count();
+                //int skip = parameters.Skip != null ? parameters.Skip.Value : 0;
+                int skip = parameters.Skip ?? 0;
+                int top = parameters.Top ?? parameters.PageSize;
+                var items = tempStaffs.Skip(skip).Take(top).ToList();
+                var results = new PagedList<StaffModel>(items, totolCount, (skip / top) + 1, top);
+
+                return Ok(new StaffListModel { Items = results, MetaData = results.MetaData});
 
             }
             catch (Exception ex)
@@ -72,6 +84,29 @@ namespace IMS_LEARN.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// Get Staff by code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetByCode/{code}")]
+        public IActionResult GetByCode(string code)
+        {
+            try
+            {
+                var data = _staffService.GetByCode(code);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return Ok(new BaseResultModel()
+                {
+                    Code = 1,
+                    IsSuccess = false,
+                    Message = $"Co loi xay ra {ex.Message}"
+                });
+            }
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace IMS_LEARN.Models
+﻿using IMS_LEARN.Common;
+
+namespace IMS_LEARN.Models
 {
     public class StaffModel
     {
@@ -14,5 +16,6 @@
     public class StaffListModel
     {
         public List<StaffModel> Items { get; set; }
+        public MetaData MetaData { get; set; }
     }
 }

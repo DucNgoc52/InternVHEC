@@ -26,5 +26,19 @@ namespace IMS_LEARN.Services.SvStaff
                 DateOn = x.DateOn
             }).AsQueryable();
         }
+
+        public StaffModel GetByCode(string code)
+        {
+            return _staffService.GetAllQueryable(x=>x.StaffCode.ToLower().Equals(code.ToLower())).Select(x => new StaffModel()
+            {
+                Id = x.Id,
+                StaffCode = x.StaffCode,
+                FirtName = x.FirtName,
+                MidleName = x.MidleName,
+                LastName = x.LastName,
+                Status = x.Status,
+                DateOn = x.DateOn
+            }).FirstOrDefault();
+        }
     }
 }
