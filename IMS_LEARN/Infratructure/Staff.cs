@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMS_LEARN.Infratructure
 {
     public class Staff
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [MaxLength(10)]
         public string StaffCode { get; set; }

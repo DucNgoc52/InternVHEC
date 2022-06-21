@@ -70,7 +70,7 @@ namespace IMS_LEARN.Controllers
                 var items = tempStaffs.Skip(skip).Take(top).ToList();
                 var results = new PagedList<StaffModel>(items, totolCount, (skip / top) + 1, top);
 
-                return Ok(new StaffListModel { Items = results, MetaData = results.MetaData});
+                return Ok(new StaffListModel { Items = results, MetaData = results.MetaData });
 
             }
             catch (Exception ex)
@@ -105,6 +105,156 @@ namespace IMS_LEARN.Controllers
                     Code = 1,
                     IsSuccess = false,
                     Message = $"Co loi xay ra {ex.Message}"
+                });
+            }
+        }
+
+        [HttpPost]
+        [Route("Create")]
+        public IActionResult Create(StaffModel input)
+        {
+            try
+            {
+                var existStaff = _staffService.GetByCode(input.StaffCode);
+                if (existStaff == null)
+                {
+                    var staff = _staffService.Create(input);
+                    if (staff != null)
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = true,
+                            Code = 0,
+                            Message = "Tạo mới Staff thành công"
+                        });
+                    }
+                    else
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = false,
+                            Code = 1,
+                            Message = "Tạo mới Staff không thành công."
+                        });
+                    }
+                }
+                else
+                {
+                    return Ok(new BaseResultModel
+                    {
+                        IsSuccess = false,
+                        Code = 1,
+                        Message = "Staff code is exist."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new BaseResultModel
+                {
+                    IsSuccess = false,
+                    Code = 1,
+                    Message = $"Tạo mới không thành công {ex.Message.ToString()}"
+                });
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult Update(StaffModel input)
+        {
+            try
+            {
+                var existStaff = _staffService.GetByCode(input.StaffCode);
+                if (existStaff != null)
+                {
+                    var staff = _staffService.Update(input);
+                    if (staff != null)
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = true,
+                            Code = 0,
+                            Message = "Update Staff thành công"
+                        });
+                    }
+                    else
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = false,
+                            Code = 1,
+                            Message = "Update Staff không thành công."
+                        });
+                    }
+                }
+                else
+                {
+                    return Ok(new BaseResultModel
+                    {
+                        IsSuccess = false,
+                        Code = 1,
+                        Message = "Staff code không tồn tại."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new BaseResultModel
+                {
+                    IsSuccess = false,
+                    Code = 1,
+                    Message = $"Update không thành công {ex.Message.ToString()}"
+                });
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult Delete(string staffcode)
+        {
+            try
+            {
+                var existStaff = _staffService.GetByCode(staffcode);
+                if (existStaff != null)
+                {
+                    var staff = _staffService.Delete(staffcode);
+                    if (staff != null)
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = true,
+                            Code = 0,
+                            Message = "Xóa Staff thành công"
+                        });
+                    }
+                    else
+                    {
+                        return Ok(new BaseResultModel
+                        {
+                            IsSuccess = false,
+                            Code = 1,
+                            Message = "Xóa Staff không thành công."
+                        });
+                    }
+                }
+                else
+                {
+                    return Ok(new BaseResultModel
+                    {
+                        IsSuccess = false,
+                        Code = 1,
+                        Message = "Staff code không tồn tại"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new BaseResultModel
+                {
+                    IsSuccess = false,
+                    Code = 1,
+                    Message = $"Xóa Staff không thành công {ex.Message.ToString()}"
                 });
             }
         }

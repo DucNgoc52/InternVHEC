@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace IMS_LEARN.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +13,7 @@ namespace IMS_LEARN.Migrations
                 name: "Staffs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     StaffCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     FirtName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     MidleName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),

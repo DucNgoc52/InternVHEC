@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IMS_LEARN.Migrations
 {
     [DbContext(typeof(ImsDbContext))]
-    [Migration("20220517144816_InitialDb")]
-    partial class InitialDb
+    [Migration("20220621142140_InitialDB")]
+    partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,9 @@ namespace IMS_LEARN.Migrations
 
             modelBuilder.Entity("IMS_LEARN.Infratructure.Staff", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOn")
                         .HasColumnType("timestamp with time zone");

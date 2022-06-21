@@ -24,11 +24,9 @@ namespace IMS_LEARN.Migrations
 
             modelBuilder.Entity("IMS_LEARN.Infratructure.Staff", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOn")
                         .HasColumnType("timestamp with time zone");

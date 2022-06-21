@@ -19,7 +19,7 @@ namespace IMS_LEARN.Services.Base
         T Update(T entity);
         public void UpdateRange(IEnumerable<T> entities);
 
-        T Delete(object id);
+        T Delete(T entiry);
         public void DeleteRange(IEnumerable<T> entities);
 
         T GetById(object id);

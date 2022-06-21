@@ -44,7 +44,13 @@ namespace IMS_LEARN.Services.Base
 
         public T Insert(T entity)
         {
-            throw new NotImplementedException();
+            T thisEntity = _context.Set<T>().Add(entity).Entity;
+            if (_context.SaveChanges() > 0)
+            {
+                return thisEntity;
+            }
+
+            return null;
         }
 
         public void InsertRange(IEnumerable<T> entities)
@@ -53,9 +59,18 @@ namespace IMS_LEARN.Services.Base
         }
 
 
-        public T Delete(object id)
+        public T Delete(T entiry)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Set<T>().Remove(entiry);
+                _context.SaveChanges();
+                return entiry;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void DeleteRange(IEnumerable<T> entities)
@@ -86,7 +101,12 @@ namespace IMS_LEARN.Services.Base
 
         public T Update(T entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            if (_context.SaveChanges() > 0)
+            {
+                return entity;
+            }
+            return null;
         }
 
         public void UpdateRange(IEnumerable<T> entities)
