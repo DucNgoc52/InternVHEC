@@ -23,6 +23,8 @@ namespace IMS_LEARN.Services.Base
         public void DeleteRange(IEnumerable<T> entities);
 
         T GetById(object id);
+        //T Approve(T entity);
+        //public void ApproveRange(IEnumerable<T> entities);
 
         void Save();
     }

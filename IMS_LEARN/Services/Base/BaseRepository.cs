@@ -109,9 +109,24 @@ namespace IMS_LEARN.Services.Base
             return null;
         }
 
+        public T Approve(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            if (_context.SaveChanges() > 0)
+            {
+                return entity;
+            }
+            return null;
+        }
+
         public void UpdateRange(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
+
+        //public void ApproveRange(IEnumerable<T> entities)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

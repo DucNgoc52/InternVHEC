@@ -3,6 +3,7 @@ using System;
 using IMS_LEARN.Infratructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IMS_LEARN.Migrations
 {
     [DbContext(typeof(ImsDbContext))]
-    partial class ImsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220726021827_InitialAddRFTKen")]
+    partial class InitialAddRFTKen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

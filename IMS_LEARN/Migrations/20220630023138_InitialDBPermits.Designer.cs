@@ -3,6 +3,7 @@ using System;
 using IMS_LEARN.Infratructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IMS_LEARN.Migrations
 {
     [DbContext(typeof(ImsDbContext))]
-    partial class ImsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220630023138_InitialDBPermits")]
+    partial class InitialDBPermits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +37,6 @@ namespace IMS_LEARN.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LeaveType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Note")
                         .HasColumnType("text");
 
                     b.Property<string>("PermitCode")
@@ -119,38 +118,6 @@ namespace IMS_LEARN.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("IMS_LEARN.Infratructure.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("ExpiredAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsRevoked")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("IssuedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("JwtId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("StaffCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("IMS_LEARN.Infratructure.Staff", b =>
                 {
                     b.Property<Guid>("Id")
@@ -159,9 +126,6 @@ namespace IMS_LEARN.Migrations
 
                     b.Property<DateTime>("DateOn")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
 
                     b.Property<string>("FirtName")
                         .HasMaxLength(50)
@@ -175,12 +139,6 @@ namespace IMS_LEARN.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("PassWord")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResetPasswordCode")
-                        .HasColumnType("text");
-
                     b.Property<string>("StaffCode")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -189,13 +147,7 @@ namespace IMS_LEARN.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserName")
-                        .IsUnique();
 
                     b.ToTable("Staffs");
                 });
